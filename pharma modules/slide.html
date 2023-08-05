@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Word Slideshow with Centered Square</title>
+    <style>
+        /* Basic styles for the slideshow container */
+        .slideshow-container {
+            max-width: 400px;
+            margin: auto;
+            text-align: center;
+            position: relative;
+        }
+
+        /* Styles for the slides (words) */
+        .word-slide {
+            display: none;
+        }
+
+        /* Style for the active slide */
+        .word-slide.active {
+            display: block;
+        }
+
+        /* Styles for arrow buttons */
+        .word-prev,
+        .word-next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .word-prev {
+            left: 0;
+        }
+
+        .word-next {
+            right: 0;
+        }
+
+        /* Styles for the square container */
+        .square-container {
+            width: 200px;
+            height: 200px;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid #ccc;
+            overflow: hidden;
+        }
+
+        /* Styles for the component container */
+        .component-container {
+            max-width: 400px;
+            margin: auto;
+            text-align: center;
+        }
+
+        /* Styles for the component input fields */
+        .component-input {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        /* Styles for the submit button */
+        .submit-button {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="component-container">
+        <div id="componentFieldsContainer">
+            <!-- Component input fields will be added here -->
+            <input type="text" class="component-input" placeholder="Component 1">
+            <input type="text" class="component-input" placeholder="Component 2">
+            <input type="text" class="component-input" placeholder="Component 3">
+        </div>
+        <div class="submit-button">
+            <button onclick="getComponentNames()" class="btn btn-primary rounded-pill">Submit</button>
+        </div>
+    </div>
+
+    <div class="slideshow-container square-container">
+        <!-- Slides (words) -->
+        <div class="word-slide active">Word 1</div>
+        <div class="word-slide">Word 2</div>
+        <div class="word-slide">Word 3</div>
+
+        <!-- Arrow buttons -->
+        <div class="word-prev" onclick="navigateWords(-1)">&#10094;</div>
+        <div class="word-next" onclick="navigateWords(1)">&#10095;</div>
+    </div>
+
+    <script>
+        // JavaScript to handle the word slideshow
+        const wordSlides = document.querySelectorAll('.word-slide');
+        let currentWordSlide = 0;
+
+        function showWordSlide(n) {
+            wordSlides.forEach((slide) => {
+                slide.classList.remove('active');
+            });
+
+            currentWordSlide = (n + wordSlides.length) % wordSlides.length;
+            wordSlides[currentWordSlide].classList.add('active');
+        }
+
+        function navigateWords(direction) {
+            showWordSlide(currentWordSlide + direction);
+        }
+
+        // Start the word slideshow when the page loads
+        showWordSlide(currentWordSlide);
+
+        // Auto-advance the word slideshow every 3 seconds (adjust as needed)
+        setInterval(() => navigateWords(1), 3000);
+
+        // JavaScript function to handle component input
+        function getComponentNames() {
+            const componentInputs = document.querySelectorAll('.component-input');
+            const componentNames = [];
+
+            componentInputs.forEach((input) => {
+                componentNames.push(input.value);
+            });
+
+            // Display the entered component names (for demonstration)
+            alert("You entered the following component names:\n" + componentNames.join("\n"));
+        }
+    </script>
+</body>
+
+</html>
